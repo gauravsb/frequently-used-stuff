@@ -21,3 +21,8 @@ table2 ih
 on (ih.col = a.col)) as temp 
 LATERAL VIEW explode(temp.val) dummy as k,v 
 where k=temp.id and get_json_object(v, '$.startTime') >= '1522335600000' and get_json_object(v, '$.endTime') <= '1523372400000';
+
+-----------------------------
+
+set hive.auto.convert.join = false;
+set mapreduce.job.reduces=20;
