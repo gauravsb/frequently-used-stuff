@@ -1,0 +1,9 @@
+
+
+xxx/spark2/bin/spark-submit --class {class-name-to-start} \
+     --deploy-mode cluster \
+     --master yarn --name $APPLICATION_NAME \
+     --conf \'spark.executor.extraJavaOptions=-Duser.timezone=JST -Dspring.profiles.active=prod\' \
+	 --conf \'spark.driver.extraJavaOptions=-Duser.timezone=JST -Dspring.profiles.active=prod\' \
+     $DESTPATH/xxx.jar
+

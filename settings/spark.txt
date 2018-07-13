@@ -1,0 +1,54 @@
+------------------------------------------------------
+spark-defaults.conf
+------------------------------------------------------
+
+spark.yarn.am.extraJavaOptions -Dhdp.version=x.x.x
+
+spark.executor.extraJavaOptions -Djava.library.path=/{path-to-hadoop-client}/lib/native:/{path-to-hadoop-client}/lib/native/Linux-amd64-64
+spark.driver.extraJavaOptions -Djava.library.path=/{path-to-hadoop-client}/lib/native:/{path-to-hadoop-client}/lib/native/Linux-amd64-64
+
+spark.yarn.queue common-spark
+
+spark.yarn.maxAppAttempts 4s
+spark.kryoserializer.buffer.max 512m
+
+spark.driver.memory 12g
+spark.driver.cores 8
+spark.yarn.driver.memoryOverhead 512
+spark.driver.maxResultSize 5g
+spark.driver.allowMultipleContexts true
+
+spark.executor.memory 8g
+spark.executor.cores 10
+
+#spark.yarn.dist.files /home/username/release/conf/log4j.properties
+#spark.dynamicAllocation.enabled true
+#spark.shuffle.service.enabled true
+
+spark.executor.instances 35
+
+spark.streaming.kafka.maxRatePerPartition 200
+spark.streaming.stopGracefullyOnShutdown true
+spark.yarn.am.attemptFailuresValidityInterval 1h
+spark.streaming.backpressure.enabled true
+spark.streaming.receiver.maxRate 300
+
+spark.akka.frameSize 2024
+spark.default.parallelism 35
+
+
+------------------------------------------------------
+spark-env.sh
+------------------------------------------------------
+
+export HDP_VERSION="x.x.x"
+export HADOOP_HOME=/xxxx/hadoop
+export SPARK_HOME=/xxxx/spark2
+export HADOOP_CONF_DIR=/xxxx/hadoop/etc/hadoop
+export SPARK_CONF_DIR=/xxxx/spark2/conf
+export HADOOP_LZO_DIR=/xxxx/hadoop/lib
+export HADOOP_CLASSPATH=$HADOOP_CLASSPATH:/xxxx/spark2/*:/xxxx/spark2/lib/*:/xxxx/hadoop/lib/*:/xxxx/hadoop/lib/native/*
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/xxxx/hadoop/lib/native
+export SPARK_CLASSPATH=$SPARK_CLASSPATH:/xxxx/spark2/lib/*:$CLASSPATH
+export SPARK_CLASSPATH=$SPARK_CLASSPATH:/xxxx/hbase/lib/*
+export YARN_CONF_DIR=/xxxx/hadoop/etc/hadoop

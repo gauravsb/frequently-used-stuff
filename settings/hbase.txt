@@ -1,0 +1,17 @@
+
+
+<property>
+  <name>hbase.rpc.timeout</name>
+  <value>180000</value>
+  <source/>
+</property>
+<property>
+  <name>hbase.client.write.buffer</name>
+  <value>8388608</value>
+</property>
+<property><name>hbase.ipc.server.callqueue.read.ratio</name><value>0.6</value></property>
+<property>
+  <name>hbase.client.scanner.timeout.period</name>
+  <value>180000</value>
+</property>
+

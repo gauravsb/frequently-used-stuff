@@ -1,0 +1,23 @@
+
+hive> describe table_name;
+
+select * from table_name where id in (select explode(split(items, ',')) from inner_table where col='');
+
+-----------------------------
+
+select a.abc from (select abc from table1 LATERAL VIEW explode(split(items, ',')) item as abc where id='') as a JOIN table2 ih on (ih.xxx = a.abc);
+
+-----------------------------
+
+select k, get_json_object(v, '$.someId1'), get_json_object(v, '$.someId2') from table_name as ih LATERAL VIEW explode(ih.value) dummy as k,v where k='' and ih.some_ = '';
+
+-----------------------------
+
+select k, temp.id, get_json_object(v, '$.jsonId1'), get_json_object(v, '$.jsonId2') from 
+(select a.col as col, ih.value as val, a.id as id from (select col, id from table1 as uh LATERAL VIEW explode(split(items, ',')) item as col 
+where uh.id in (select ck from some_table limit 5)) as a 
+JOIN 
+table2 ih 
+on (ih.col = a.col)) as temp 
+LATERAL VIEW explode(temp.val) dummy as k,v 
+where k=temp.id and get_json_object(v, '$.startTime') >= '1522335600000' and get_json_object(v, '$.endTime') <= '1523372400000';

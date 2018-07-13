@@ -1,0 +1,164 @@
+Compress :
+
+tar -zcvf archive-name.tar.gz directory-name
+
+Uncompress :
+
+tar -zxvf archive-name.tar.gz
+
+ps uaxww | grep xxx
+
+------------------------------------------------------
+Processes Investigation
+------------------------------------------------------
+
+lsof -i tcp:22248
+netstat -tulpn
+lsof -i :25
+ls -l /proc/111/exe
+ls -l /proc/111/cwd
+
+strace -p 28057 -f -s 10000 -e sendto
+
+strace -p 28072 -f -s 10000 -e sendto
+
+strace  -p 23276 -f -e read -s 10000 2>&1
+
+$JAVA_HOME/bin/jps
+
+# check java thread status by jstack
+/usr/local/jdk1.8/bin/jstack 20693|vi -
+
+# Garbage collection monitoring
+jstat -gc <process-id>
+
+------------------------------------------------------
+
+foreach SER (1 2)
+ssh server${SER}xx " command"
+end
+
+foreach SER (4 5)
+foreach INS (1 2)
+some-command ${SER}xx${INS}xxx
+end
+end
+
+for i in {101..142}
+do
+  echo "=== ${i} ==="
+done
+
+foreach SER (`seq -f %02g 1 42`)
+echo "====== ${SER} ======"
+end
+
+for NUM in `seq -f %02g 1 32` ; do
+done
+
+------------------------------------------------------
+
+
+while read idFromFile; do echo idFromFile ${echo -n idFromFile | md5} >> xxxx.txt; done < id_list_file.txt
+
+while read line; do echo `echo -n $line | md5` `echo $line` >> output.txt; done < file_with_lines.txt
+
+while read -r line; do echo `echo -n $line | tr -d '\n' | md5` `echo $line` >> output.txt; done < file_with_lines.txt
+
+while IFS=$' \t\n\r' read -r line; do echo `echo -n $line | md5` >> key.txt; done < file_with_lines.txt
+
+while read -r line; do echo `echo select xxxx from xxx where xxxx = \'$line\'\;` >> query.txt ; done < input.txt
+
+# average 
+awk '{ sum += $1 } END { if (NR > 0) print sum / NR; }' log_with_numbers.log
+  
+# maximum 
+awk -v max=0 '{ if ($1 > max) { max = $1} } END { print max }' log_with_numbers.log
+
+# max
+nohup awk 'BEGIN{x=-2147483648};$0>x{x=$0};END{print "Maximum : " x}' temp.txt > max.txt &
+
+# min
+nohup awk 'BEGIN{x=2147483648};$0<x{x=$0};END{print "Minimum : " x}' temp-min.txt > min.txt &
+
+# avg 
+nohup awk '{ sum += $0 } END { if (NR > 0) print sum / NR }' temp.txt > avg.txt &
+
+------------------------------------------------------
+
+set colsep ,
+
+set pagesize 0
+set headsep off
+set trimspool on
+set echo off
+set head off
+set feedback off
+set pages 0
+set term off
+
+spool /path-to-output/csv-file-name.csv
+
+{command-goes-here}
+
+spool off
+
+sqlplus -S {user} < saved.sql
+
+------------------------------------------------------
+
+# sed removes leading zeroes from stdin
+num=$(echo $leading-zeroes | sed 's/^0*//')
+
+------------------------------------------------------
+
+curl -s "http://" | iconv -f UTF-8 -t EUC-JP
+
+curl --header "Content-Type:application/json" -T xxx.json  "http://"
+
+curl -X DELETE -s "http://"
+
+curl --header "Content-Type:application/json" -T xxx.json  "http://"
+
+curl -X DELETE -s "http://"
+
+curl http://myservice --upload-file file.txt
+
+curl --header "Content-Type:application/json" -X PUT "http://" -F "file=@xxx.json"
+
+curl -s -v -x {some-proxy} -H "X-Analytics-Acc: 1" -H "X-Analytics-Aid: 1"  "http://"  | iconv -f UTF-8 -t 
+
+curl -x {some-proxy} -s "http://"
+
+# put data
+curl -s -v --header "Content-Type:application/json" -T xxx.json "http://"
+
+
+------------------------------------------------------
+FLUENTD / TD-AGENT
+------------------------------------------------------
+
+vi /etc/td-agent/td-agent.conf
+
+sudo /etc/init.d/td-agent status
+sudo /etc/init.d/td-agent start
+sudo /etc/init.d/td-agent stop
+
+tail -f /var/log/td-agent/td-agent.log
+
+TD_AGENT_LOG_FILE=/var/log/td-agent/td-agent.log
+TD_AGENT_PID_FILE=/var/run/td-agent/td-agent.pid
+TD_AGENT_LOCK_FILE=/var/lock/subsys/td-agent
+
+------------------------------------------------------
+
+Searching in jar files:
+
+find . -name \*.jar -exec sh -c 'printf "\n\nFile: {}"; jar tf {}' ";" | less +/foo
+
+
+Searching in war files:
+
+find . -name \*.war -exec sh -c 'printf "\n\nFile: {}"; unzip -l {}' ";" | less +/httpclient
+
+
